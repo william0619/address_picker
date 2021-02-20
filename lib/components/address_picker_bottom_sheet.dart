@@ -75,32 +75,7 @@ class _AddressPickerBottomSheetState extends State<AddressPickerBottomSheet> {
     return MultiProvider(
       providers: [
         Provider(create: (_) => _addressProvider),
-        Provider(create: (_) => _addressProvider),
       ],
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildNavAddress(),
-          SizedBox(height: 12),
-          Expanded(
-            child: NotificationListener<AddressNotification>(
-              onNotification: onNotification,
-              child: PageView(
-                physics: NeverScrollableScrollPhysics(),
-                controller: pageController,
-                children: [
-                  AddressTab(data: _addressProvider.provinces, type: AddressTypeEnum.provinces),
-                  AddressTab(data: _addressProvider.cities, type: AddressTypeEnum.cities),
-                  AddressTab(data: _addressProvider.area, type: AddressTypeEnum.area),
-                ],
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-    return Provider(
-      create: (_) => _addressProvider,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -153,7 +128,7 @@ class _AddressPickerBottomSheetState extends State<AddressPickerBottomSheet> {
         child: Text(
           _addressProvider.getNavRowText(type),
           style: TextStyle(
-            color: isSelected ? Colors.pink : Colors.black,
+            color: isSelected ? Colors.pink : Theme.of(context).textTheme.bodyText2.color,
             fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
           ),
         ),
@@ -176,6 +151,7 @@ class _AddressPickerBottomSheetState extends State<AddressPickerBottomSheet> {
         break;
       case AddressTypeEnum.area:
         _addressProvider.selectedArea = v.value;
+        Navigator.of(context).pop(_addressProvider.getSelectedValue());
         break;
     }
     setState(() {});

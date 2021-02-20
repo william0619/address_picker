@@ -1,5 +1,6 @@
-import 'package:address_picker/components/address_picker_bottom_sheet.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:address_picker/address_picker_service.dart';
 
 class AddressPickerSelector extends StatefulWidget {
   @override
@@ -7,17 +8,20 @@ class AddressPickerSelector extends StatefulWidget {
 }
 
 class _AddressPickerSelectorState extends State<AddressPickerSelector> {
+  AddressPickerModel _values;
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => {showAddressPicker()},
       child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 6),
         constraints: BoxConstraints(minHeight: 48),
         child: Row(
           children: [
             Text('选择地址'),
-            buildSelectedAddress(),
-            Icon(Icons.arrow_drop_down),
+            SizedBox(width: 16),
+            Expanded(child: buildSelectedAddress()),
+            Icon(Icons.arrow_drop_down, color: Color(0xFFCCCCCC), size: 18),
           ],
         ),
       ),
@@ -25,26 +29,19 @@ class _AddressPickerSelectorState extends State<AddressPickerSelector> {
   }
 
   Widget buildSelectedAddress() {
-    return Expanded(
-      child: Column(
-        children: [],
-      ),
+    if (_values == null) return SizedBox();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(_values.province.name),
+        Text(_values.city.name),
+        Text(_values.area.name),
+      ],
     );
   }
 
-  void showAddressPicker() {
-    showModalBottomSheet(
-      isScrollControlled: true,
-      context: context,
-      backgroundColor: Colors.white,
-      elevation: 10,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10))),
-      builder: (context) {
-        return SizedBox(
-          height: MediaQuery.of(context).size.height * (2 / 3),
-          child: AddressPickerBottomSheet(),
-        );
-      },
-    ).then((value) => null);
+  void showAddressPicker() async {
+    _values = await AddressPicker.showAddressPicker(context);
+    setState(() {});
   }
 }

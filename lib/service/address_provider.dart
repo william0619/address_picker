@@ -1,3 +1,4 @@
+import 'package:address_picker/address_picker_service.dart';
 import 'package:flutter/widgets.dart';
 import 'package:address_picker/enum/address_enum.dart';
 import 'package:address_picker/data/area_data.dart';
@@ -7,7 +8,7 @@ import 'package:address_picker/model/address_item_model.dart';
 import 'package:provider/provider.dart';
 
 /// 收货地址状态管理
-class AddressProvider extends ChangeNotifier {
+class AddressProvider {
   List<AddressItemModel> get provinces => _organizeData(provincesData);
   List<AddressItemModel> get cities => getCurrentProvinceCities();
   List<AddressItemModel> get area => getCurrentCitiesArea();
@@ -86,10 +87,15 @@ class AddressProvider extends ChangeNotifier {
     return false;
   }
 
+  /// 清空值
   void clearSelectedAllValue() {
     this.selectedProvince = null;
     this.selectedCity = null;
     this.selectedArea = null;
+  }
+
+  AddressPickerModel getSelectedValue(){
+    return AddressPickerModel(province: this.selectedProvince,city: this.selectedCity,area: this.selectedArea);
   }
 
   /// 获取共享类
