@@ -1,5 +1,5 @@
-import 'package:address_picker/address_picker_service.dart';
 import 'package:flutter/widgets.dart';
+import 'package:address_picker/model/address_picker_model.dart';
 import 'package:address_picker/enum/address_enum.dart';
 import 'package:address_picker/data/area_data.dart';
 import 'package:address_picker/data/cities_data.dart';
@@ -94,8 +94,8 @@ class AddressProvider {
     this.selectedArea = null;
   }
 
-  AddressPickerModel getSelectedValue(){
-    return AddressPickerModel(province: this.selectedProvince,city: this.selectedCity,area: this.selectedArea);
+  AddressPickerModel getSelectedValue() {
+    return AddressPickerModel(province: this.selectedProvince, city: this.selectedCity, area: this.selectedArea);
   }
 
   /// 获取共享类

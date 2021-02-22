@@ -1,8 +1,13 @@
-import 'package:flutter/cupertino.dart';
+import 'package:address_picker/service/address_picker_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:address_picker/model/address_picker_model.dart';
 import 'package:address_picker/address_picker_service.dart';
 
 class AddressPickerSelector extends StatefulWidget {
+  final AddressPickerModel initData;
+  final AddressPickerTheme theme;
+
+  const AddressPickerSelector({Key key, this.initData, this.theme}) : super(key: key);
   @override
   _AddressPickerSelectorState createState() => _AddressPickerSelectorState();
 }
@@ -41,7 +46,7 @@ class _AddressPickerSelectorState extends State<AddressPickerSelector> {
   }
 
   void showAddressPicker() async {
-    _values = await AddressPicker.showAddressPicker(context);
+    _values = await AddressPicker.showAddressPicker(context, theme: widget.theme, initData: widget.initData);
     setState(() {});
   }
 }

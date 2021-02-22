@@ -1,4 +1,5 @@
 import 'package:address_picker/model/address_item_model.dart';
+import 'package:address_picker/service/address_picker_theme.dart';
 import 'package:flutter/material.dart';
 
 class AddressPickerItem extends StatefulWidget {
@@ -11,7 +12,8 @@ class AddressPickerItem extends StatefulWidget {
 }
 
 class _AddressPickerItemState extends State<AddressPickerItem> {
-  final Color _selectedColor = Color(0xffFF004F);
+  AddressPickerTheme _theme;
+  Color get _selectedColor => _theme.selectedColor;
   Color get _color => _selected == true ? _selectedColor : null;
   bool _selected;
   @override
@@ -30,6 +32,7 @@ class _AddressPickerItemState extends State<AddressPickerItem> {
 
   @override
   Widget build(BuildContext context) {
+    _theme = AddressPickerTheme.of(context);
     return InkWell(
       onTap: () {
         if (_selected != true) {

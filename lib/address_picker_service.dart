@@ -1,9 +1,10 @@
-import 'package:address_picker/components/address_picker_bottom_sheet.dart';
-import 'package:address_picker/model/address_item_model.dart';
 import 'package:flutter/material.dart';
+import 'package:address_picker/service/address_picker_theme.dart';
+import 'package:address_picker/components/address_picker_bottom_sheet.dart';
+import 'package:address_picker/model/address_picker_model.dart';
 
 class AddressPicker {
-  static Future<AddressPickerModel> showAddressPicker(BuildContext context, {AddressPickerModel initData}) async {
+  static Future<AddressPickerModel> showAddressPicker(BuildContext context, {AddressPickerModel initData, AddressPickerTheme theme}) async {
     AddressPickerModel address = await showModalBottomSheet(
       isScrollControlled: true,
       context: context,
@@ -13,24 +14,11 @@ class AddressPicker {
       builder: (context) {
         return SizedBox(
           height: MediaQuery.of(context).size.height * (2 / 3),
-          child: AddressPickerBottomSheet(),
+          child: AddressPickerBottomSheet(theme: theme),
         );
       },
     );
     if (address != null) return address;
     return null;
   }
-}
-
-class AddressPickerModel {
-  /// 选择省
-  final AddressItemModel province;
-
-  /// 选中市
-  final AddressItemModel city;
-
-  /// 选择区
-  final AddressItemModel area;
-
-  AddressPickerModel({@required this.province, @required this.city, @required this.area});
 }

@@ -3,6 +3,7 @@ import 'package:address_picker/enum/address_enum.dart';
 import 'package:address_picker/model/address_item_model.dart';
 import 'package:address_picker/service/address_notification.dart';
 import 'package:address_picker/service/address_provider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AddressTab extends StatefulWidget {
@@ -24,14 +25,18 @@ class _AddressTabState extends State<AddressTab> with AutomaticKeepAliveClientMi
   Widget build(BuildContext context) {
     super.build(context);
     _addressProvider = AddressProvider.of(context);
-    return ListView.builder(
-      controller: _scrollController,
-      itemBuilder: (context, index) {
-        AddressItemModel item = _data[index];
-        bool selected = _addressProvider.isSelected(widget.type, item);
-        return AddressPickerItem(item: item, selected: selected, onChanged: _onChange);
-      },
-      itemCount: _data.length,
+    return Scrollbar(
+      thickness: 4,
+      radius: Radius.circular(4),
+      child: ListView.builder(
+        controller: _scrollController,
+        itemBuilder: (context, index) {
+          AddressItemModel item = _data[index];
+          bool selected = _addressProvider.isSelected(widget.type, item);
+          return AddressPickerItem(item: item, selected: selected, onChanged: _onChange);
+        },
+        itemCount: _data.length,
+      ),
     );
   }
 

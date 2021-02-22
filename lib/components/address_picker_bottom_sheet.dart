@@ -2,24 +2,21 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:address_picker/components/address_tab.dart';
 import 'package:address_picker/enum/address_enum.dart';
+import 'package:address_picker/model/address_picker_model.dart';
+import 'package:address_picker/service/address_picker_theme.dart';
+import 'package:address_picker/components/address_tab.dart';
 import 'package:address_picker/service/address_notification.dart';
 import 'package:address_picker/service/address_provider.dart';
 import 'package:address_picker/components/address_bottom_sheet_head.dart';
-import 'package:address_picker/model/address_item_model.dart';
 
 class AddressPickerBottomSheet extends StatefulWidget {
-  /// 选中省
-  final AddressItemModel selectedProvince;
+  /// 选中地址
+  final AddressPickerModel selectedAddress;
 
-  /// 选中市
-  final AddressItemModel selectedCity;
-
-  /// 选中区
-  final AddressItemModel selectedArea;
-
-  const AddressPickerBottomSheet({Key key, this.selectedProvince, this.selectedCity, this.selectedArea}) : super(key: key);
+  /// 设置主题
+  final AddressPickerTheme theme;
+  const AddressPickerBottomSheet({Key key, this.selectedAddress, this.theme}) : super(key: key);
   @override
   _AddressPickerBottomSheetState createState() => _AddressPickerBottomSheetState();
 }
@@ -40,7 +37,12 @@ class _AddressPickerBottomSheetState extends State<AddressPickerBottomSheet> {
   /// 头部流
   StreamController _streamController = StreamController<int>();
 
-  ///
+  /// 获取主题
+  AddressPickerTheme get _theme {
+    if (widget.theme == null) return AddressPickerTheme();
+    return widget.theme;
+  }
+
   @override
   void initState() {
     pageController = PageController(initialPage: currentPageIndex);
@@ -75,6 +77,7 @@ class _AddressPickerBottomSheetState extends State<AddressPickerBottomSheet> {
     return MultiProvider(
       providers: [
         Provider(create: (_) => _addressProvider),
+        Provider(create: (_) => _theme),
       ],
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -128,7 +131,7 @@ class _AddressPickerBottomSheetState extends State<AddressPickerBottomSheet> {
         child: Text(
           _addressProvider.getNavRowText(type),
           style: TextStyle(
-            color: isSelected ? Colors.pink : Theme.of(context).textTheme.bodyText2.color,
+            color: isSelected ? _theme.selectedColor : Theme.of(context).textTheme.bodyText2.color,
             fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
           ),
         ),
@@ -163,6 +166,5 @@ class _AddressPickerBottomSheetState extends State<AddressPickerBottomSheet> {
     currentPageIndex = index;
     pageController.animateToPage(index, duration: Duration(milliseconds: 400), curve: Curves.ease);
     _streamController.sink.add(index);
-    // setState(() {});
   }
 }
