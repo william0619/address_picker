@@ -1,4 +1,4 @@
-import 'package:address_picker/service/address_picker_theme.dart';
+import 'package:address_picker/model/address_picker_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:address_picker/model/address_picker_model.dart';
 import 'package:address_picker/address_picker_service.dart';
@@ -14,6 +14,13 @@ class AddressPickerSelector extends StatefulWidget {
 
 class _AddressPickerSelectorState extends State<AddressPickerSelector> {
   AddressPickerModel _values;
+
+  @override
+  void initState() {
+    _values = widget.initData;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(

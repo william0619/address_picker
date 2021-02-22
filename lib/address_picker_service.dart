@@ -1,5 +1,5 @@
+import 'package:address_picker/model/address_picker_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:address_picker/service/address_picker_theme.dart';
 import 'package:address_picker/components/address_picker_bottom_sheet.dart';
 import 'package:address_picker/model/address_picker_model.dart';
 
@@ -14,7 +14,7 @@ class AddressPicker {
       builder: (context) {
         return SizedBox(
           height: MediaQuery.of(context).size.height * (2 / 3),
-          child: AddressPickerBottomSheet(theme: theme),
+          child: AddressPickerBottomSheet(theme: theme, initData: initData),
         );
       },
     );

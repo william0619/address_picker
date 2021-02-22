@@ -1,7 +1,5 @@
 import 'dart:convert' show json;
 
-import 'package:address_picker/enum/address_enum.dart';
-
 T _asT<T>(dynamic value) {
   if (value is T) {
     return value;

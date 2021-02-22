@@ -1,5 +1,5 @@
 import 'package:address_picker/model/address_item_model.dart';
-import 'package:address_picker/service/address_picker_theme.dart';
+import 'package:address_picker/model/address_picker_theme.dart';
 import 'package:flutter/material.dart';
 
 class AddressPickerItem extends StatefulWidget {

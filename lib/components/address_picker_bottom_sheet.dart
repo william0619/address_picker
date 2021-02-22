@@ -1,10 +1,10 @@
 import 'dart:async';
 
+import 'package:address_picker/model/address_picker_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:address_picker/enum/address_enum.dart';
 import 'package:address_picker/model/address_picker_model.dart';
-import 'package:address_picker/service/address_picker_theme.dart';
 import 'package:address_picker/components/address_tab.dart';
 import 'package:address_picker/service/address_notification.dart';
 import 'package:address_picker/service/address_provider.dart';
@@ -12,11 +12,11 @@ import 'package:address_picker/components/address_bottom_sheet_head.dart';
 
 class AddressPickerBottomSheet extends StatefulWidget {
   /// 选中地址
-  final AddressPickerModel selectedAddress;
+  final AddressPickerModel initData;
 
   /// 设置主题
   final AddressPickerTheme theme;
-  const AddressPickerBottomSheet({Key key, this.selectedAddress, this.theme}) : super(key: key);
+  const AddressPickerBottomSheet({Key key, this.initData, this.theme}) : super(key: key);
   @override
   _AddressPickerBottomSheetState createState() => _AddressPickerBottomSheetState();
 }
@@ -45,10 +45,15 @@ class _AddressPickerBottomSheetState extends State<AddressPickerBottomSheet> {
 
   @override
   void initState() {
-    pageController = PageController(initialPage: currentPageIndex);
-
     /// 实例化共享层
     _addressProvider = AddressProvider();
+    if (widget.initData != null) {
+      _addressProvider.selectedProvince = widget.initData.province;
+      _addressProvider.selectedCity = widget.initData.city;
+      _addressProvider.selectedArea = widget.initData.area;
+      currentPageIndex = 2;
+    }
+    pageController = PageController(initialPage: currentPageIndex);
 
     super.initState();
   }
